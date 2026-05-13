@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+
+    body{
+      font-family:Arial;
+      background:#f4f4f4;
+      padding:40px;
+    }
+
+    .box{
+      max-width:900px;
+      margin:auto;
+      background:white;
+      padding:20px;
+      border-radius:10px;
+    }
+
+    .item{
+      padding:12px;
+      border-bottom:1px solid #ddd;
+    }
+
+    h1{
+      text-align:center;
+    }
+
+  </style>
+
+</head>
+<body>
+
+<div class="box">
+
+  <h1>Lista de Cadastros</h1>
+
+  <div id="lista"></div>
+
+</div>
+
+<script>
+
+const supabaseUrl = 'https://udttsosmammxxzjzztrp.supabase.co';
+
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVkdHRzb3NtYW1teHh6anp6dHJwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgzNDM4MzQsImV4cCI6MjA5MzkxOTgzNH0.Dtb5vE0c8dIa_Z5eyl4X32k-3v7zgMjEackBqp0P1lI';
+
+const client = supabase.createClient(supabaseUrl, supabaseKey);
+
+async function carregar(){
+
+  const { data, error } = await client
+    .from('cadastros')
+    .select('*')
+    .order('id', { ascending: false });
+
+  if(error){
+    console.log(error);
+    return;
+  }
+
+  const lista = document.getElementById('lista');
+
+  data.forEach(item => {
+
+    lista.innerHTML += `
+      <div class="item">
+        <strong>Nome:</strong> ${item.nome} |
+        <strong>Serviço:</strong> ${item.servico} |
+        <strong>Data:</strong> ${item.data} |
+        <strong>WhatsApp:</strong> ${item.whatsapp}
+      </div>
+    `;
+
+  });
+
+}
+
+carregar();
+
+</script>
+
+</body>
+</html>
