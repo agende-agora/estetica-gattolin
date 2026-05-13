@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Studio de Beleza - Agendamento</title>
-    
+    <title>Estética Gattolin - Agendamento</title>
+
     <!-- Supabase SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Flatpickr (Calendário Inline) -->
+
+    <!-- Flatpickr -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/airbnb.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -22,10 +22,10 @@
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;500;600&display=swap');
-        
+
         :root {
             --primary: #1a1a1a;
-            --accent: #c5a059; /* Dourado elegante */
+            --accent: #c5a059;
         }
 
         body {
@@ -39,7 +39,8 @@
         }
 
         .hero-image {
-            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1560066984-138dadb4c035?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-image: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
+            url('https://static.wixstatic.com/media/6fe7ae_cc81f5057a3648edb3d4a89b0bae7916~mv2.png/v1/fill/w_1595,h_598,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/6fe7ae_cc81f5057a3648edb3d4a89b0bae7916~mv2.png');
             background-size: cover;
             background-position: center;
         }
@@ -74,190 +75,184 @@
 </head>
 <body class="min-h-screen">
 
-    <div class="flex flex-col lg:flex-row min-h-screen">
-        
-        <!-- Lado Esquerdo: Imagem e Boas-vindas -->
-        <div class="lg:w-1/3 hero-image p-12 flex flex-col justify-end text-white min-h-[300px] lg:min-h-screen">
-            <div class="space-y-4">
-                <span class="uppercase tracking-widest text-sm font-medium text-gray-300">Bem-vindo ao</span>
-                <h1 class="text-5xl font-bold">Studio de Beleza Premium</h1>
-                <p class="text-gray-200 max-w-xs">Transforme seu visual com os melhores especialistas da região.</p>
-            </div>
-        </div>
+<div class="flex flex-col lg:flex-row min-h-screen">
 
-        <!-- Lado Direito: Formulário -->
-        <div class="lg:w-2/3 p-6 lg:p-16 bg-white overflow-y-auto">
-            <div class="max-w-2xl mx-auto space-y-10">
-                
-                <div class="flex justify-between items-center">
-                    <h2 class="text-3xl font-bold">Agende seu Horário</h2>
-                    <div class="text-right hidden sm:block">
-                        <p class="text-sm text-gray-500">Dúvidas?</p>
-                        <p class="font-semibold text-accent">(11) 99999-9999</p>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    
-                    <!-- Coluna 1: Dados Pessoais -->
-                    <div class="space-y-6">
-                        <div class="space-y-4">
-                            <h3 class="text-lg font-semibold flex items-center gap-2">
-                                <i data-lucide="user" class="w-5 h-5 text-accent"></i>
-                                Seus Dados
-                            </h3>
-                            
-                            <div>
-                                <label class="block text-xs font-medium text-gray-400 uppercase mb-1">Nome Completo</label>
-                                <input type="text" id="nome" placeholder="Como podemos te chamar?" 
-                                    class="w-full border-b-2 border-gray-100 py-3 focus:border-accent outline-none transition-colors">
-                            </div>
-
-                            <div>
-                                <label class="block text-xs font-medium text-gray-400 uppercase mb-1">WhatsApp</label>
-                                <input type="text" id="whatsapp" placeholder="(00) 00000-0000" 
-                                    class="w-full border-b-2 border-gray-100 py-3 focus:border-accent outline-none transition-colors">
-                            </div>
-
-                            <div>
-                                <label class="block text-xs font-medium text-gray-400 uppercase mb-1">Serviço Desejado</label>
-                                <select id="servico" class="w-full border-b-2 border-gray-100 py-3 focus:border-accent outline-none transition-colors bg-transparent">
-                                    <option value="">Selecione um serviço</option>
-                                    <option value="Corte Masculino">Corte Masculino</option>
-                                    <option value="Corte Feminino">Corte Feminino</option>
-                                    <option value="Coloração">Coloração / Mechas</option>
-                                    <option value="Barba">Barba Premium</option>
-                                    <option value="Escova">Escova e Hidratação</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="pt-6">
-                            <img src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
-                                 alt="Salão" class="rounded-2xl custom-shadow">
-                        </div>
-                    </div>
-
-                    <!-- Coluna 2: Calendário e Horário -->
-                    <div class="space-y-6">
-                        <h3 class="text-lg font-semibold flex items-center gap-2">
-                            <i data-lucide="calendar" class="w-5 h-5 text-accent"></i>
-                            Escolha a Data
-                        </h3>
-                        
-                        <div id="calendar-container" class="bg-gray-50 rounded-2xl p-4 custom-shadow">
-                            <input type="hidden" id="data">
-                        </div>
-
-                        <div class="space-y-4">
-                            <h3 class="text-lg font-semibold flex items-center gap-2">
-                                <i data-lucide="clock" class="w-5 h-5 text-accent"></i>
-                                Horários Disponíveis
-                            </h3>
-                            <div class="grid grid-cols-3 gap-2" id="time-slots">
-                                <!-- Horários serão gerados via JS -->
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- Botão de Ação -->
-                <div class="pt-8 border-t border-gray-100">
-                    <button onclick="salvar()" id="btnSalvar"
-                        class="w-full bg-black hover:bg-gray-800 text-white font-bold py-5 rounded-xl shadow-xl transition-all active:scale-[0.98] flex items-center justify-center gap-3">
-                        <span id="btnText">CONFIRMAR AGENDAMENTO</span>
-                        <i data-lucide="arrow-right" class="w-5 h-5"></i>
-                    </button>
-                </div>
-
-            </div>
+    <!-- Lado Esquerdo -->
+    <div class="lg:w-1/3 hero-image p-12 flex flex-col justify-end text-white min-h-[300px] lg:min-h-screen">
+        <div class="space-y-4">
+            <span class="uppercase tracking-widest text-sm font-medium text-gray-300">Bem-vindo à</span>
+            <h1 class="text-5xl font-bold">Estética Gattolin</h1>
+            <p class="text-gray-200 max-w-xs">
+                Cuide do seu corpo, da sua autoestima e do seu bem-estar com tratamentos personalizados para alcançar o resultado ideal.
+            </p>
         </div>
     </div>
 
-    <script>
-        // Inicializar ícones
-        lucide.createIcons();
+    <!-- Lado Direito -->
+    <div class="lg:w-2/3 p-6 lg:p-16 bg-white overflow-y-auto">
+        <div class="max-w-2xl mx-auto space-y-10">
 
-        // Configuração do Supabase
-        const supabaseUrl = 'https://udttsosmammxxzjzztrp.supabase.co';
-        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVkdHRzb3NtYW1teHh6anp6dHJwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgzNDM4MzQsImV4cCI6MjA5MzkxOTgzNH0.Dtb5vE0c8dIa_Z5eyl4X32k-3v7zgMjEackBqp0P1lI';
-        const client = supabase.createClient(supabaseUrl, supabaseKey);
+            <div class="flex justify-between items-center">
+                <h2 class="text-3xl font-bold">Agende seu Horário</h2>
+                <div class="text-right hidden sm:block">
+                    <p class="text-sm text-gray-500">Dúvidas?</p>
+                    <p class="font-semibold text-accent">Tel: (11) 94600-9768</p>
+                </div>
+            </div>
 
-        let selectedTime = "";
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
-        // Gerar horários
-        const timeSlotsContainer = document.getElementById('time-slots');
-        const times = ["09:00", "10:00", "11:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00"];
-        
-        times.forEach(time => {
-            const btn = document.createElement('button');
-            btn.className = 'time-slot py-2 rounded-lg text-sm font-medium hover:border-accent';
-            btn.innerText = time;
-            btn.onclick = () => {
-                document.querySelectorAll('.time-slot').forEach(b => b.classList.remove('selected'));
-                btn.classList.add('selected');
-                selectedTime = time;
-            };
-            timeSlotsContainer.appendChild(btn);
-        });
+                <!-- Dados -->
+                <div class="space-y-6">
+                    <div class="space-y-4">
+                        <h3 class="text-lg font-semibold flex items-center gap-2">
+                            <i data-lucide="user" class="w-5 h-5 text-accent"></i>
+                            Seus Dados
+                        </h3>
 
-        // Inicializar o calendário INLINE (Aberto)
-        const datePicker = flatpickr("#data", {
-            inline: true,
-            locale: "pt",
-            dateFormat: "Y-m-d",
-            minDate: "today",
-            onChange: function(selectedDates, dateStr) {
-                console.log("Data selecionada:", dateStr);
-            }
-        });
+                        <div>
+                            <label class="block text-xs font-medium text-gray-400 uppercase mb-1">Nome Completo</label>
+                            <input type="text" id="nome" placeholder="Como podemos te chamar?"
+                                class="w-full border-b-2 border-gray-100 py-3 focus:border-accent outline-none transition-colors">
+                        </div>
 
-        async function salvar() {
-            const btn = document.getElementById('btnSalvar');
-            const btnText = document.getElementById('btnText');
-            const nome = document.getElementById('nome').value;
-            const servico = document.getElementById('servico').value;
-            const data = document.getElementById('data').value;
-            const whatsapp = document.getElementById('whatsapp').value;
+                        <div>
+                            <label class="block text-xs font-medium text-gray-400 uppercase mb-1">WhatsApp</label>
+                            <input type="text" id="whatsapp" placeholder="(00) 00000-0000"
+                                class="w-full border-b-2 border-gray-100 py-3 focus:border-accent outline-none transition-colors">
+                        </div>
 
-            if (!nome || !servico || !data || !whatsapp || !selectedTime) {
-                alert('Por favor, preencha todos os campos e escolha um horário.');
-                return;
-            }
+                        <div>
+                            <label class="block text-xs font-medium text-gray-400 uppercase mb-1">Serviço Desejado</label>
+                            <select id="servico" class="w-full border-b-2 border-gray-100 py-3 focus:border-accent outline-none transition-colors bg-transparent">
+                                <option value="">Selecione um tratamento</option>
+                                <option value="Tratamentos Corporais">Tratamentos Corporais</option>
+                                <option value="Tratamentos Faciais">Tratamentos Faciais</option>
+                                <option value="Massagens Relaxantes">Massagens Relaxantes</option>
+                                <option value="Massagens Terapêuticas">Massagens Terapêuticas</option>
+                                <option value="Avaliação Estética">Avaliação Estética</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
 
-            // Combinar data e hora para o banco de dados
-            const dataCompleta = `${data} ${selectedTime}`;
+                <!-- Calendário -->
+                <div class="space-y-6">
+                    <h3 class="text-lg font-semibold flex items-center gap-2">
+                        <i data-lucide="calendar" class="w-5 h-5 text-accent"></i>
+                        Escolha a Data
+                    </h3>
 
-            btn.disabled = true;
-            btnText.innerText = 'PROCESSANDO...';
+                    <div id="calendar-container" class="bg-gray-50 rounded-2xl p-4 custom-shadow">
+                        <input type="hidden" id="data">
+                    </div>
 
-            const { error } = await client
-                .from('cadastros')
-                .insert([
-                    {
-                        nome: nome,
-                        servico: servico,
-                        data: dataCompleta,
-                        whatsapp: whatsapp
-                    }
-                ]);
+                    <div class="space-y-4">
+                        <h3 class="text-lg font-semibold flex items-center gap-2">
+                            <i data-lucide="clock" class="w-5 h-5 text-accent"></i>
+                            Horários Disponíveis
+                        </h3>
+                        <div class="grid grid-cols-3 gap-2" id="time-slots"></div>
+                    </div>
+                </div>
 
-            if (error) {
-                alert('Erro: ' + error.message);
-                btn.disabled = false;
-                btnText.innerText = 'CONFIRMAR AGENDAMENTO';
-            } else {
-                btn.classList.remove('bg-black');
-                btn.classList.add('bg-green-600');
-                btnText.innerText = 'AGENDADO COM SUCESSO!';
-                
-                setTimeout(() => {
-                    alert('Seu horário foi reservado com sucesso!');
-                    location.reload();
-                }, 1000);
-            }
+            </div>
+
+            <!-- Botão -->
+            <div class="pt-8 border-t border-gray-100">
+                <button onclick="salvar()" id="btnSalvar"
+                    class="w-full bg-black hover:bg-gray-800 text-white font-bold py-5 rounded-xl shadow-xl transition-all active:scale-[0.98] flex items-center justify-center gap-3">
+                    <span id="btnText">CONFIRMAR AGENDAMENTO</span>
+                    <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    lucide.createIcons();
+
+    const supabaseUrl = 'https://udttsosmammxxzjzztrp.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVkdHRzb3NtYW1teHh6anp6dHJwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgzNDM4MzQsImV4cCI6MjA5MzkxOTgzNH0.Dtb5vE0c8dIa_Z5eyl4X32k-3v7zgMjEackBqp0P1lI';
+    const client = supabase.createClient(supabaseUrl, supabaseKey);
+
+    let selectedTime = "";
+
+    const timeSlotsContainer = document.getElementById('time-slots');
+
+    const times = [
+        "08:00", "09:00", "10:00", "11:00",
+        "12:00", "13:00", "14:00", "15:00",
+        "16:00", "17:00", "18:00", "19:00"
+    ];
+
+    times.forEach(time => {
+        const btn = document.createElement('button');
+        btn.className = 'time-slot py-2 rounded-lg text-sm font-medium hover:border-accent';
+        btn.innerText = time;
+        btn.onclick = () => {
+            document.querySelectorAll('.time-slot').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            selectedTime = time;
+        };
+        timeSlotsContainer.appendChild(btn);
+    });
+
+    flatpickr("#data", {
+        inline: true,
+        locale: "pt",
+        dateFormat: "Y-m-d",
+        minDate: "today"
+    });
+
+    async function salvar() {
+        const btn = document.getElementById('btnSalvar');
+        const btnText = document.getElementById('btnText');
+
+        const nome = document.getElementById('nome').value;
+        const servico = document.getElementById('servico').value;
+        const data = document.getElementById('data').value;
+        const whatsapp = document.getElementById('whatsapp').value;
+
+        if (!nome || !servico || !data || !whatsapp || !selectedTime) {
+            alert('Por favor, preencha todos os campos e escolha um horário.');
+            return;
         }
-    </script>
+
+        const dataCompleta = `${data} ${selectedTime}`;
+
+        btn.disabled = true;
+        btnText.innerText = 'PROCESSANDO...';
+
+        const { error } = await client
+            .from('cadastros')
+            .insert([
+                {
+                    nome: nome,
+                    servico: servico,
+                    data: dataCompleta,
+                    whatsapp: whatsapp
+                }
+            ]);
+
+        if (error) {
+            alert('Erro: ' + error.message);
+            btn.disabled = false;
+            btnText.innerText = 'CONFIRMAR AGENDAMENTO';
+        } else {
+            btn.classList.remove('bg-black');
+            btn.classList.add('bg-green-600');
+            btnText.innerText = 'AGENDADO COM SUCESSO!';
+
+            setTimeout(() => {
+                alert('Seu horário foi reservado com sucesso!');
+                location.reload();
+            }, 1000);
+        }
+    }
+</script>
+
 </body>
 </html>
